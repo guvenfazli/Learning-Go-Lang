@@ -10,7 +10,7 @@ func main() {
 
 	fmt.Println(ebt)
 	fmt.Println(profit)
-	fmt.Println(ratio)
+	fmt.Printf("%.2f", ratio)
 
 }
 
