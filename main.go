@@ -4,11 +4,14 @@ import "fmt"
 
 func main() {
 	var userValue float64
-	var multiplier float64
+	var infilationRate float64
+	fmt.Println("Please enter your value: ")
+	fmt.Scanf("%f", &userValue)
+	fmt.Println("Please provide an infilation rate: ")
+	fmt.Scan(&infilationRate)
 
-	fmt.Print("Please enter your value: ")
-	fmt.Scan(&userValue)
-	fmt.Print("Please enter your multiplier: ")
-	fmt.Scan(&multiplier)
-	fmt.Print(userValue * multiplier)
+	var result = fmt.Sprintf("Your future value with inflation will be: %.2f", userValue*infilationRate)
+
+	fmt.Print(result)
+
 }
