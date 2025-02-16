@@ -21,7 +21,7 @@ func writeBalanceToFile(balance float64) {
 }
 
 func main() {
-	var balance float64 = 1000
+	var balance float64 = getBalanceFromFile()
 
 	fmt.Println("Welcome to GO Bank!")
 
