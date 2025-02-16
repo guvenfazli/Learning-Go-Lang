@@ -3,34 +3,25 @@ package main
 import "fmt"
 
 func main() {
-	var userValue float64
-	var userYear int
-	var infilationRate float64
+	var revenue float64
+	var expenses float64
+	var taxRate float64
 
-	outputText("Please enter a value: ")
-	fmt.Scanf("%f", &userValue)
-	outputText("Please provide years: ")
-	fmt.Scan(&userYear)
-	outputText("Please enter an infilation rate: ")
-	fmt.Scan(&infilationRate)
+	fmt.Print("Revenue: ")
+	fmt.Scan(&revenue)
 
-	withInfilation, withoutInfilation := calculateFutureValue(userValue, infilationRate, userYear)
+	fmt.Print("Expenses: ")
+	fmt.Scan(&expenses)
 
-	/* 	var result = fmt.Sprintf("Your future value with inflation will be: %.2f", userValue*infilationRate)
-	 */
+	fmt.Print("Tax Rate: ")
+	fmt.Scan(&taxRate)
 
-	fmt.Println("Your value with Infilation: ", withInfilation)
-	fmt.Print("Your value without Infilation: ", withoutInfilation)
+	ebt := revenue - expenses
+	profit := ebt * (1 - taxRate/100)
+	ratio := ebt / profit
 
-}
+	fmt.Println(ebt)
+	fmt.Println(profit)
+	fmt.Println(ratio)
 
-func outputText(userText string) {
-	fmt.Print(userText)
-}
-
-func calculateFutureValue(userValue, infilationRate float64, year int) (float64, float64) {
-	futureValueWithoutInfilation := userValue * float64(year)
-	futureValueWithInfilation := (userValue * float64(year)) / infilationRate
-
-	return futureValueWithInfilation, futureValueWithoutInfilation
 }
