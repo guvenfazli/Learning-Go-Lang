@@ -4,42 +4,15 @@ import "fmt"
 
 func main() {
 
-	enteredRevenue, enteredExpenses, enteredTaxRate := gatherUserValues("Revenue: ", "Expenses: ", "Tax Rate: ")
+	fmt.Println("Welcome to GO Bank!")
+	fmt.Println("What do you want to do?")
+	fmt.Println("1. Check Balance")
+	fmt.Println("2. Deposit Money")
+	fmt.Println("3. Withdraw Money")
+	fmt.Println("4. Exit")
 
-	ebt, profit, ratio := calculateWithValues(enteredRevenue, enteredExpenses, enteredTaxRate)
-
-	fmt.Println(ebt)
-	fmt.Println(profit)
-	fmt.Printf("%.2f", ratio)
-
-}
-
-func gatherUserValues(revenueMessage, expensesMessage, taxRateMessage string) (enteredRevenue, enteredExpenses, enteredTaxRate float64) {
-
-	var revenue float64
-	var expenses float64
-	var taxRate float64
-
-	fmt.Print(revenueMessage)
-	fmt.Scan(&revenue)
-	enteredRevenue = revenue
-
-	fmt.Print(expensesMessage)
-	fmt.Scan(&expenses)
-	enteredExpenses = expenses
-
-	fmt.Print(taxRateMessage)
-	fmt.Scan(&taxRate)
-	enteredTaxRate = taxRate
-
-	return enteredRevenue, enteredExpenses, enteredTaxRate
-
-}
-
-func calculateWithValues(revenue, expenses, taxRate float64) (ebt, profit, ratio float64) {
-	ebt = revenue - expenses
-	profit = ebt * (1 - taxRate/100)
-	ratio = ebt / profit
-
-	return ebt, profit, ratio
+	var choice int
+	fmt.Print("Please make a choice: ")
+	fmt.Scan(&choice)
+	fmt.Print("Your choice: ", choice)
 }
