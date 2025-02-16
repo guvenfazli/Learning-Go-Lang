@@ -1,2 +1,3 @@
-Your calculations are: 
--37 -36.502128 1.0136395335636323
+EBT: 35.0
+Profilt: 34.5
+Ratio: 1.016

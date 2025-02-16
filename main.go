@@ -27,7 +27,7 @@ func validateUserInputs(revenue, expenses, taxRate float64) error {
 func saveTheResults(ebt, profit, ratio float64) error {
 	var fileError error
 
-	generalResults := fmt.Sprint("Your calculations are: \n", ebt, profit, ratio)
+	generalResults := fmt.Sprintf("EBT: %.1f\nProfilt: %.1f\nRatio: %.3f\n", ebt, profit, ratio)
 
 	fileWritingError := os.WriteFile("calculatedResults.txt", []byte(generalResults), 0064)
 
