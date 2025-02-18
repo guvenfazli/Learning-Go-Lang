@@ -4,76 +4,93 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 )
 
-// Goals
-// 1) Validate user input
-//    => Show error message & exit if invalid input is provided
-//    - No negative numbers
-//    - Not 0
-// 2) Store calculated results into file
+const accountBalanceFile = "balance.txt"
 
-func validateUserInputs(revenue, expenses, taxRate float64) error {
+func getBalanceFromFile() (float64, error) {
+	data, err := os.ReadFile(accountBalanceFile)
 
-	var invalidValue error
-
-	if revenue <= 0 || expenses <= 0 || taxRate <= 0 {
-		invalidValue = errors.New("value can not be negative")
+	if err != nil {
+		return 1000, errors.New("failed to find balance file")
 	}
 
-	return invalidValue
+	balanceText := string(data)
+	balance, err := strconv.ParseFloat(balanceText, 64)
+
+	if err != nil {
+		return 1000, errors.New("failed to parse stored balance value")
+	}
+
+	return balance, nil
 }
 
-func saveTheResults(ebt, profit, ratio float64) error {
-	var fileError error
-
-	generalResults := fmt.Sprintf("EBT: %.1f\nProfilt: %.1f\nRatio: %.3f\n", ebt, profit, ratio)
-
-	fileWritingError := os.WriteFile("calculatedResults.txt", []byte(generalResults), 0064)
-
-	if fileWritingError != nil {
-		fileError = errors.New("can not write the file")
-	}
-
-	return fileError
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
 }
 
 func main() {
-	revenue := getUserInput("Revenue: ")
-	expenses := getUserInput("Expenses: ")
-	taxRate := getUserInput("Tax Rate: ")
+	var accountBalance, err = getBalanceFromFile()
 
-	newError := validateUserInputs(revenue, expenses, taxRate)
-
-	if newError != nil {
-		fmt.Print("ERROR")
-		panic(newError)
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		fmt.Println("---------")
+		// panic("Can't continue, sorry.")
 	}
 
-	ebt, profit, ratio := calculateFinancials(revenue, expenses, taxRate)
+	fmt.Println("Welcome to Go Bank!")
 
-	fileError := saveTheResults(ebt, profit, ratio)
+	for {
+		presentOptions()
+		var choice int
+		fmt.Print("Your choice: ")
+		fmt.Scan(&choice)
 
-	if fileError != nil {
-		fmt.Print("ERROR")
-		panic(fileError)
+		// wantsCheckBalance := choice == 1
+
+		switch choice {
+		case 1:
+			fmt.Println("Your balance is", accountBalance)
+		case 2:
+			fmt.Print("Your deposit: ")
+			var depositAmount float64
+			fmt.Scan(&depositAmount)
+
+			if depositAmount <= 0 {
+				fmt.Println("Invalid amount. Must be greater than 0.")
+				// return
+				continue
+			}
+
+			accountBalance += depositAmount // accountBalance = accountBalance + depositAmount
+			fmt.Println("Balance updated! New amount:", accountBalance)
+			writeBalanceToFile(accountBalance)
+		case 3:
+			fmt.Print("Withdrawal amount: ")
+			var withdrawalAmount float64
+			fmt.Scan(&withdrawalAmount)
+
+			if withdrawalAmount <= 0 {
+				fmt.Println("Invalid amount. Must be greater than 0.")
+				continue
+			}
+
+			if withdrawalAmount > accountBalance {
+				fmt.Println("Invalid amount. You can't withdraw more than you have.")
+				continue
+			}
+
+			accountBalance -= withdrawalAmount // accountBalance = accountBalance + depositAmount
+			fmt.Println("Balance updated! New amount:", accountBalance)
+			writeBalanceToFile(accountBalance)
+		default:
+			fmt.Println("Goodbye!")
+			fmt.Println("Thanks for choosing our bank")
+			return
+			// break
+		}
 	}
-
-	fmt.Printf("%.1f\n", ebt)
-	fmt.Printf("%.1f\n", profit)
-	fmt.Printf("%.3f\n", ratio)
-}
-
-func calculateFinancials(revenue, expenses, taxRate float64) (float64, float64, float64) {
-	ebt := revenue - expenses
-	profit := ebt * (1 - taxRate/100)
-	ratio := ebt / profit
-	return ebt, profit, ratio
-}
-
-func getUserInput(infoText string) float64 {
-	var userInput float64
-	fmt.Print(infoText)
-	fmt.Scan(&userInput)
-	return userInput
 }
