@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"example.com/learningGO/fileOps"
+	"github.com/Pallinder/go-randomdata"
 )
 
 const accountBalanceFile = "balance.txt"
@@ -19,6 +20,7 @@ func main() {
 	}
 
 	fmt.Println("Welcome to Go Bank!")
+	fmt.Println("Reach to us 24/7: ", randomdata.PhoneNumber())
 
 	for {
 		presentOptions()
