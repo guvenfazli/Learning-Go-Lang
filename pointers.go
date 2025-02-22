@@ -11,33 +11,37 @@ type UserAccount struct {
 	isMarried bool
 }
 
+type LoggedInAccount struct {
+	name  string
+	email string
+	age   int64
+}
+
 func main() {
 
 	var createdAccount UserAccount
+	var loggedInAccount LoggedInAccount
 	var accountCreated bool
+	var loggedIn bool
 	usersChoice := greetUserAndNavigate()
 
-	switch usersChoice {
-	case 1:
-		{
-			fmt.Print("Login!")
-
-		}
-	case 2:
-		{
-			fmt.Print("Create an account!")
-			createdAccount, accountCreated := createAnAccount()
-
-		}
-	default:
-		{
-			fmt.Print("Unknown command selected! App is shutting down.")
-			return
-		}
+	if usersChoice == 1 {
+		fmt.Println("Login!")
+		loggedInAccount, loggedIn = logInAccount()
+	} else if usersChoice == 2 {
+		fmt.Println("Create an account!")
+		createdAccount, accountCreated = createAnAccount()
+	} else {
+		fmt.Print("Unknown command selected! App is shutting down.")
+		return
 	}
 
 	if accountCreated {
+		fmt.Printf("Welcome to our bank %v!", createdAccount.name)
+	}
 
+	if loggedIn {
+		fmt.Printf("Welcome back %v, i'll be bringing the menu soon! Thank you for using us.", loggedInAccount.name)
 	}
 
 }
@@ -46,8 +50,8 @@ func greetUserAndNavigate() int64 {
 	var accountOption int64
 	fmt.Println("Welcome!")
 	fmt.Println("In order to use my application, please log in or create an account!")
-	fmt.Println("1. I do not have an account: ")
-	fmt.Println("2. I do have an account: ")
+	fmt.Println("1. I do have an account: ")
+	fmt.Println("2. I do not have an account: ")
 	fmt.Print("Please choose an option: ")
 	fmt.Scan(&accountOption)
 	return accountOption
@@ -88,24 +92,26 @@ func createAnAccount() (UserAccount, bool) {
 	return createdAccount, accountCreated
 }
 
-func logInAccount(createdAccount UserAccount, createdAccountEmail, createdAccountPassword string) string {
+func logInAccount() (LoggedInAccount, bool) {
+	var userName string
 	var userEmail string
-	var userPassword string
+	var userAge int64
 
-	fmt.Println("Please enter your fresh created accounts email: ")
+	fmt.Println("Your name: ")
+	fmt.Scan(&userName)
+	fmt.Println("Your email: ")
 	fmt.Scan(&userEmail)
-	fmt.Println("Password Please: ")
-	fmt.Scan(&userPassword)
+	fmt.Println("Your age: ")
+	fmt.Scan(&userAge)
 
-	if userEmail != createdAccountEmail || userPassword != createdAccountPassword {
-		errorMessage := "Username or password is wrong, please restart the app and try again!"
-		return errorMessage
-	} else {
-
-		greetMessage := "Welcome!"
-
-		return greetMessage
-
+	loggedInAccount := LoggedInAccount{
+		userName,
+		userEmail,
+		userAge,
 	}
+
+	loggedIn := true
+
+	return loggedInAccount, loggedIn
 
 }
