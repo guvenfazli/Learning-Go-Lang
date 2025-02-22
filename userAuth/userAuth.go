@@ -1,20 +1,20 @@
-package main
+package userAuth
 
 import "fmt"
 
 type UserAccount struct {
-	name      string
-	surname   string
-	age       int64
-	email     string
-	password  string
-	isMarried bool
+	Name      string
+	Surname   string
+	Age       int64
+	Email     string
+	Password  string
+	IsMarried bool
 }
 
 type LoggedInAccount struct {
-	name  string
-	email string
-	age   int64
+	Name  string
+	Email string
+	Age   int64
 }
 
 func CreateAnAccount() (UserAccount, bool) {

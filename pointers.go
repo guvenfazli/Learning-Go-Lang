@@ -6,7 +6,7 @@ import (
 	auth "example.com/learningGO/userAuth"
 )
 
-type UserAccount struct {
+/* type UserAccount struct {
 	name      string
 	surname   string
 	age       int64
@@ -19,14 +19,15 @@ type LoggedInAccount struct {
 	name  string
 	email string
 	age   int64
-}
+} */
 
 func main() {
 
-	var createdAccount UserAccount
-	var loggedInAccount LoggedInAccount
+	var createdAccount auth.UserAccount
+	var loggedInAccount auth.LoggedInAccount
 	var accountCreated bool
 	var loggedIn bool
+
 	usersChoice := greetUserAndNavigate()
 
 	if usersChoice == 1 {
@@ -34,18 +35,18 @@ func main() {
 		loggedInAccount, loggedIn = auth.LogInAccount()
 	} else if usersChoice == 2 {
 		fmt.Println("Create an account!")
-		createdAccount, accountCreated = createAnAccount()
+		createdAccount, accountCreated = auth.CreateAnAccount()
 	} else {
 		fmt.Print("Unknown command selected! App is shutting down.")
 		return
 	}
 
 	if accountCreated {
-		fmt.Printf("Welcome to our bank %v!", createdAccount.name)
+		fmt.Printf("Welcome to our bank %v!", createdAccount.Name)
 	}
 
 	if loggedIn {
-		fmt.Printf("Welcome back %v, i'll be bringing the menu soon! Thank you for using us.", loggedInAccount.name)
+		fmt.Printf("Welcome back %v, i'll be bringing the menu soon! Thank you for using us.", loggedInAccount.Name)
 	}
 
 }
@@ -61,7 +62,7 @@ func greetUserAndNavigate() int64 {
 	return accountOption
 }
 
-func createAnAccount() (UserAccount, bool) {
+/* func createAnAccount() (UserAccount, bool) {
 	var userName string
 	var userSurname string
 	var userAge int64
@@ -118,4 +119,4 @@ func logInAccount() (LoggedInAccount, bool) {
 
 	return loggedInAccount, loggedIn
 
-}
+} */
