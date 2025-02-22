@@ -1,3 +1,0 @@
-EBT: 35.0
-Profilt: 34.5
-Ratio: 1.016
