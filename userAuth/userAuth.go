@@ -1,6 +1,9 @@
 package userAuth
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 type UserAccount struct {
 	Name      string
@@ -40,13 +43,22 @@ func CreateAnAccount() (UserAccount, bool) {
 	fmt.Println("Are you married? ")
 	fmt.Scan(&userIsMarried)
 
+	registeredAccount, error := os.ReadFile("userList.txt")
+	convertedData := string(registeredAccount)
+	fmt.Print(convertedData[0])
+
+	if error != nil {
+		fmt.Print("ERROR")
+		panic(error)
+	}
+
 	createdAccount = UserAccount{
-		userName,
-		userSurname,
-		userAge,
-		userEmail,
-		userPassword,
-		userIsMarried,
+		Name:      userName,
+		Surname:   userSurname,
+		Age:       userAge,
+		Email:     userEmail,
+		Password:  userPassword,
+		IsMarried: userIsMarried,
 	}
 	accountCreated := true
 	return createdAccount, accountCreated
