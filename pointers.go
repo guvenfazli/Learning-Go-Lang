@@ -18,13 +18,13 @@ func main() {
 
 	if usersChoice == 1 {
 		fmt.Println("Login!")
+		var alreadyExistedAccount = os.ReadFile("userList.txt")
 		loggedInAccount, loggedIn = userAuth.LogInAccount()
 	} else if usersChoice == 2 {
 		fmt.Println("Create an account!")
 		createdAccount, accountCreated = userAuth.CreateAnAccount()
-		convertedData := fmt.Sprintf("%v", createdAccount)
+		convertedData := fmt.Sprintf("%v", &createdAccount)
 		os.WriteFile("userList.txt", []byte(convertedData), 0644)
-
 	} else {
 		fmt.Print("Unknown command selected! App is shutting down.")
 		return
