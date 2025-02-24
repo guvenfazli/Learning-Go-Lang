@@ -18,7 +18,6 @@ func main() {
 
 	if usersChoice == 1 {
 		fmt.Println("Login!")
-		var alreadyExistedAccount = os.ReadFile("userList.txt")
 		loggedInAccount, loggedIn = userAuth.LogInAccount()
 	} else if usersChoice == 2 {
 		fmt.Println("Create an account!")
