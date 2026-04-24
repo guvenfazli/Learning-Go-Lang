@@ -11,6 +11,6 @@ func main() {
 	//	fmt.Println("First Value:", firstValue)
 	//	fmt.Println("Second Value:", secondValue)
 
-	fmt.Printf("First Value: %v\nSecond Value: %v\n", firstValue, secondValue)
+	fmt.Printf("First value: %.82f\nSecond Value: %.92f", firstValue, secondValue)
 
 }
